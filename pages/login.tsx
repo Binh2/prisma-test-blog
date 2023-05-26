@@ -13,10 +13,7 @@ export default function LogIn(props) {
   });
 
   useEffect(() => {    
-    if (session.status == 'authenticated') {
-      console.log(session)
-      router.push('/')
-    }     
+    if (session.status == 'authenticated') router.push('/');     
   }, [session])
   
   const handleChange = (prop) => (event) => {
@@ -49,5 +46,6 @@ export default function LogIn(props) {
       <Link href="/signup">Sign up</Link>
     </div>
     <button>Submit</button>
+    <button onClick={() => signIn("github", {redirect: true})}>Sign in with GitHub</button>
   </form>
 }

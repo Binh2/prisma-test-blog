@@ -1,25 +1,3 @@
-// import React from "react"
-// import { GetServerSideProps } from "next"
-// import ReactMarkdown from "react-markdown"
-// import Layout from "../../components/Layout"
-// import { PostProps } from "../../components/Post"
-// import prisma from '../../lib/prisma';
-
-// export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-//   const post = {
-//     id: "1",
-//     title: "Prisma is the perfect ORM for Next.js",
-//     content: "[Prisma](https://github.com/prisma/prisma) and Next.js go _great_ together!",
-//     published: false,
-//     author: {
-//       name: "Nikolas Burk",
-//       email: "burk@prisma.io",
-//     },
-//   }
-//   return {
-//     props: post,
-//   }
-// }
 // pages/p/[id].tsx
 
 import React from 'react';
@@ -54,6 +32,13 @@ async function publishPost(id: string): Promise<void> {
   await Router.push('/');
 }
 
+async function deletePost(id: string): Promise<void> {
+  await fetch(`/api/post/${id}`, {
+    method: 'DELETE',
+  });
+  Router.push('/');
+}
+
 const Post: React.FC<PostProps> = (props) => {
   const { data: session, status } = useSession();
   if (status === 'loading') {
@@ -75,6 +60,11 @@ const Post: React.FC<PostProps> = (props) => {
         {!props.published && userHasValidSession && postBelongsToUser && (
           <button onClick={() => publishPost(props.id)}>Publish</button>
         )}
+        {
+          userHasValidSession && postBelongsToUser && (
+            <button onClick={() => deletePost(props.id)}>Delete</button>
+          )
+        }
       </div>
       <style jsx>{`
         .page {

@@ -2,7 +2,7 @@ import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-export default function LogIn(props) {
+export default function SignUp(props) {
   const session = useSession();
   const router = useRouter();
   
@@ -17,10 +17,7 @@ export default function LogIn(props) {
   });
 
   useEffect(() => {    
-    if (session.status == 'authenticated') {
-      console.log(session)
-      router.push('/')
-    }     
+    if (session.status == 'authenticated') router.push('/');     
   }, [session])
   
   const handleChange = (prop) => (event) => {
